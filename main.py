@@ -2,12 +2,12 @@ import sys
 import pygame
 from pygame.locals import *
 from config import HEIGHT, WIDTH, FPS
-from player import *
-from platform_builder import *
-import camera
-from sprite_controller import addCollision, addPlayer, addSprite, getAllSprites
-import controls
-from collision import Platform
+from entities.player import *
+from tools.platform_builder import *
+import controllers.camera as camera
+from controllers.sprite_controller import addCollision, addPlayer, addSprite, getAllSprites
+import controllers.controls as controls
+from entities.collision import Platform
 
  
 pygame.init()

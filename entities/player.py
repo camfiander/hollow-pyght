@@ -1,11 +1,11 @@
-from counter import Counter
-from nail_interaction import NailInteractionType
-from controls import get_inputs,get_pressed
-from sprite_controller import getCollisionGroup
+from entities.shared.counter import Counter
+from enums.nail_interaction import NailInteractionType
+from controllers.controls import get_inputs,get_pressed
+from controllers.sprite_controller import getCollisionGroup
 import pygame
 from config import *
 from pygame.locals import *
-from nail import Nail
+from entities.nail import Nail
 vec = pygame.math.Vector2  # 2 for two dimensional
 
 class Player(pygame.sprite.Sprite):

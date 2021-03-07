@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from nail_interaction import NailInteractionType
+from enums.nail_interaction import NailInteractionType
 from config import WIDTH,HEIGHT
 
 class Platform(pygame.sprite.Sprite):

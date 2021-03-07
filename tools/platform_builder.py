@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
-from sprite_controller import addCollision, addSprite
-import camera
-from nail_interaction import NailInteractionType
+from controllers.sprite_controller import addCollision, addSprite
+import controllers.camera as camera
+from enums.nail_interaction import NailInteractionType
 
 class PlatformBuilder(pygame.sprite.Sprite):
     def __init__(self):

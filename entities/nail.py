@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
-from sprite_controller import addCollision, addSprite, getCollisionGroup
-from nail_interaction import NailInteractionType
-from counter import Counter
+from controllers.sprite_controller import addCollision, addSprite, getCollisionGroup
+from enums.nail_interaction import NailInteractionType
+from entities.shared.counter import Counter
 
 class Nail(pygame.sprite.Sprite):
     offset = pygame.math.Vector2(100,100)

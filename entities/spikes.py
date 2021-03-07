@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
-from nail_interaction import NailInteractionType
-from sprite_controller import getPlayerGroup
+from enums.nail_interaction import NailInteractionType
+from controllers.sprite_controller import getPlayerGroup
 class Spikes(pygame.sprite.Sprite):
     def __init__(self, size) -> None:
         super().__init__()

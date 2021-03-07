@@ -1,6 +1,8 @@
 import pygame
 from pygame.locals import *
 from sprite_controller import addCollision, addSprite
+import camera
+from nail_interaction import NailInteractionType
 
 class PlatformBuilder(pygame.sprite.Sprite):
     def __init__(self):
@@ -11,10 +13,13 @@ class PlatformBuilder(pygame.sprite.Sprite):
         self.drawing = False
         self.plat = None
         self.anchor = (0,0)
+        self.nailInteractionType = NailInteractionType.NO_INTERACT
 
     def update(self):
         if(pygame.mouse.get_focused()):
-            self.rect.topleft = pygame.mouse.get_pos()
+            mouse_pos = pygame.mouse.get_pos()
+            self.rect.left = mouse_pos[0] + camera.get_rect().left
+            self.rect.top = mouse_pos[1] + camera.get_rect().top 
             if(pygame.mouse.get_pressed(num_buttons=3)[0]):
                 if(not self.drawing):
                     self.drawing = True
@@ -41,10 +46,12 @@ class PlatformBuilder(pygame.sprite.Sprite):
 class PlatformBuilderPlatform(pygame.sprite.Sprite):
     def __init__(self, rect) -> None:
         super().__init__()
+        self.invincibility = -1
         self.surf = pygame.Surface(rect.size)
         self.surf.fill('blue')
         self.rect = self.surf.get_rect()
         self.rect.topleft = rect.topleft
+        self.nailInteractionType = NailInteractionType.NO_INTERACT
 
 
                 

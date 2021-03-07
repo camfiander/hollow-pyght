@@ -1,0 +1,20 @@
+Need for a camera system:
+    Draws portion of large room from specified position
+    Camera has fixed scale
+    Camera follows player
+    Camera area is bounded by room boundaries
+    Camera transitions smoothly (ease) between focus points
+    Camera can be controlled by room section properties
+        room = entire loaded area
+        e.g. arena area (a section of a room) can be
+        bounded by different boundaries than the
+        rest of the room
+    
+    Possible feature(s):
+    Can focus multiple points/objects at once
+
+
+    Room Section properties:
+        Area to ignore until player enters
+        Special boundary areas
+        Lock-x/lock-y camera movement

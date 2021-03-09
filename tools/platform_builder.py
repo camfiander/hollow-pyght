@@ -51,7 +51,7 @@ class PlatformBuilderPlatform(pygame.sprite.Sprite):
         self.surf.fill('blue')
         self.rect = self.surf.get_rect()
         self.rect.topleft = rect.topleft
-        self.nailInteractionType = NailInteractionType.NO_INTERACT
+        self.nailInteractionType = NailInteractionType.SOFT_KNOCKBACK
 
 
                 

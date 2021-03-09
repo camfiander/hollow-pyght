@@ -1,3 +1,4 @@
+from entities.shared.minmaxhelper import maxMag, minMag
 from entities.shared.counter import Counter
 from enums.nail_interaction import NailInteractionType
 from controllers.controls import get_inputs,get_pressed
@@ -23,11 +24,11 @@ class Player(pygame.sprite.Sprite):
         self.grounded = False
         self.holding_jump = False
         self.knockbackVelocity = 0
-        self.knockbackFrames = Counter(10)
+        self.knockbackFrames = Counter(5)
         self.nail = Nail(self)
         self.invincibility = Counter(150)
         self.stun = Counter(30)
-        self.nailCooldown = Counter(16)
+        self.nailCooldown = Counter(26)
         self.hp = 5
     
         self.counters = [
@@ -48,6 +49,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.vel.x = 0
 
+                   
         if(inputs["down"] and not self.grounded):
             self.facing.y = 1
         elif(inputs["up"]):
@@ -67,15 +69,19 @@ class Player(pygame.sprite.Sprite):
                 self.jumping = False
                 self.vel.y = 0
         
+        if(self.knockbackFrames): 
+            if(self.knockbackVelocity.x != 0):
+                self.vel.x = maxMag(self.knockbackVelocity.x,self.vel.x)
+            else:
+                self.vel.y = maxMag(self.knockbackVelocity.y*6,self.vel.y)
+
         self.vel += self.acc
 
         self.vel.y = min(self.vel.y,MAX_FALL_SPEED)
         self.pos += self.vel + 0.5 * self.acc + (self.knockbackVelocity if self.knockbackFrames else vec(0,0))
 
-      #  if self.pos.x > WIDTH:
-      #      self.pos.x = 0
-      #  if self.pos.x < 0:
-      #      self.pos.x = WIDTH
+        if(self.knockbackFrames.time == 1 and self.knockbackVelocity.y < 0):
+            self.vel.y = 0
 
         #Collision goes here
         rectMoved = self.rect.copy()
@@ -132,6 +138,7 @@ class Player(pygame.sprite.Sprite):
 
     def attack(self):
         if(get_pressed("attack") and not self.nailCooldown):
+            self.nailCooldown.reset()
             self.nail.swing()
 
 
@@ -154,9 +161,12 @@ class Player(pygame.sprite.Sprite):
             self.invincibility.reset()
             self.stun.reset()
 
-    def knockback(self,direction,strength=4):
-        self.knockbackFrames.reset()
-        self.knockbackVelocity = direction * strength
+    def knockback(self,direction,strength=2,interactionType=None):
+        if(direction.y == 1):
+            self.vel.y = max(0,self.vel.y)
+        elif(direction.y == 0 or interactionType != NailInteractionType.SOFT_KNOCKBACK):
+            self.knockbackFrames.reset()
+            self.knockbackVelocity = direction * strength
 
 
    

@@ -6,3 +6,4 @@ class NailInteractionType(Enum):
     KNOCKBACK = auto()
     DAMAGE = auto()
     DAMAGE_NO_KNOCKBACK = auto()
+    SOFT_KNOCKBACK = auto()

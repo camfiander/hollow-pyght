@@ -10,4 +10,4 @@ class Platform(pygame.sprite.Sprite):
         self.surf.fill((255,0,0))
         self.rect = self.surf.get_rect(center = (WIDTH/2, HEIGHT - 10))
  
-        self.nailInteractionType = NailInteractionType.NO_INTERACT
+        self.nailInteractionType = NailInteractionType.SOFT_KNOCKBACK

@@ -11,23 +11,30 @@ class Nail(pygame.sprite.Sprite):
         self.player = player
         self.pos = player.pos
         self.facing = player.facing
-        self.surf = pygame.Surface((80,45))
+        self.surf = pygame.Surface((120,80))
         self.surf.fill('red')
         self.rect = self.surf.get_rect()
         self.lifeFrames = Counter(6)
         self.dmg = 1
 
     def update(self):
+        #TODO: Implement this same size change for the surface
+        # currently this only changes the hitbox 
+        self.rect.size = (120,80) if self.facing.y == 0 else (50,140)
         self.rect.center = pygame.math.Vector2(0,-40) + self.pos + (Nail.offset.elementwise() * self.facing)
+        
         if(not self.lifeFrames):
             super().kill()
         else:
             for hit in pygame.sprite.spritecollide(self,getCollisionGroup(),False):
                 if(hit.nailInteractionType == NailInteractionType.DAMAGE or hit.nailInteractionType == NailInteractionType.DAMAGE_NO_KNOCKBACK or hit.nailInteractionType == NailInteractionType.BREAKABLE):
                     hit.damage(self.dmg)
-                if(hit.nailInteractionType == NailInteractionType.KNOCKBACK or hit.nailInteractionType == NailInteractionType.DAMAGE):
-                    hit.knockback(self.facing,4)
-                    self.player.knockback(self.facing * -1)     
+                if(hit.nailInteractionType in (NailInteractionType.KNOCKBACK,NailInteractionType.SOFT_KNOCKBACK,NailInteractionType.BREAKABLE)):
+                    try:
+                        hit.knockback(self.facing,4)
+                    except:
+                        pass
+                    self.player.knockback(self.facing * -1, interactionType=hit.nailInteractionType)     
         self.lifeFrames.update()
         
 

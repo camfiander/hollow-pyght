@@ -1,3 +1,4 @@
+from entities.spikes import Spikes
 import sys
 import pygame
 from pygame.locals import *
@@ -24,10 +25,12 @@ pygame.display.set_caption("Game")
 PT1 = Platform()
 P1 = Player()
 PB1 = PlatformBuilder()
+SPK1 = Spikes((40,40))
+SPK1.rect.topleft = (400,400)
 addPlayer(P1)
-addCollision(PT1)
+addCollision(PT1,SPK1)
 
-addSprite(PT1,P1,PB1)
+addSprite(PT1,P1,PB1,SPK1)
 
 camera.follow(P1)
 
@@ -56,7 +59,9 @@ while True:
         #which might be more optimized
         roomSurface.blit(entity.surf, entity.rect)
     displaysurface.blit(roomSurface,(0,0),camera.get_rect())
-    displaysurface.blit(font.render("grounded: {}".format(P1.grounded),True,(255,255,255)),(0,0))
+    displaysurface.blit(font.render("Nail Counter: {}".format(P1.nailCooldown.time),True,(255,255,255)),(0,0))
+    displaysurface.blit(font.render("Knockback Frames: {}".format(P1.knockbackFrames.time),True,(255,255,255)),(0,40))
+
     #displaysurface.blit(uiSurface,(0,0))
     pygame.display.update()
     FramePerSec.tick(FPS)
